@@ -110,40 +110,55 @@
             }
             else {
                 //TODO:: REPLACE [chicagoStartups.reverse()] WITH A FUNCTION CALLED "chicagoStartupsReverse"
-                chicagoStartups.reverse().forEach( function(startup) {
+                chicagoStartupsReverse(chicagoStartups).forEach( function(startup) {
                     var childDiv = document.createElement('div');
                     var text = document.createTextNode(startup);
                     childDiv.appendChild(text);
                     reverseContainer.appendChild(childDiv);
                 });
             }
+ 
         }
     }
 
-    function chicagoStartupsReverse() {
+    function chicagoStartupsReverse(a) {
         var reversedStartups = [];
         /*
             TODO: REVERSE THE CONTENTS OF THE ARRAY WITHOUT USING THE BUILT IN REVERSE METHOD
                   RETURN THE REVERSED ARRAY
-
             TIPS: 
                 1.  REVIEW JAVASCRIPT ARRAY DATA STRUCTURE AND THE BUILTIN METHODS PROVIDED TO ALL ARRAYS
-
-                2.  THIS IS A COMMON JOB INTERVIEW QUESTION, THAT SHOULD BE SOLVABLE BASED ON AN UNDERSTANDING OF
-                    DATA STRUTUCTURES REGARDLESS OF THE PROGRAMMING LANGUAGE
+                2.  THIS IS A COMMON JOB INTERVIEW QUESTION, THAT SHOULD BE SOLVABLE BASED ON AN UNDERSTANDING OF DATA STRUTUCTURES REGARDLESS OF THE PROGRAMMING LANGUAGE
         
         */
+        for (var i = a.length - 1; i >= 0; i--) {
+        	reversedStartups.push(a[i]);
+        }
         return reversedStartups;
     }
 
+    //Did not know whether this section goes, just put it under the orginal one
     function cleanAndCountCharacters() {
-        console.log('CLEAN AND COUNT CHARACTERS');
+		console.log('CLEAN AND COUNT CHARACTERS');
         /*
             TODO: REMOVES ANY SPECIAL CHARACTERS FROM EACH COMPANY NAME AND
               DISPLAYS THE NUMBER OF REMAINING CHARACTERS NEXT TO THE FULL WORD.
               DONT FORGET TO REMOVE LEADING AND TRAILING WHITESPACES AS WELL
         */
+        var cleanDiv = document.createElement('div');
+        cleanDiv.id = 'cleanContainer';
+        var cleanCompanyNamesContainer = document.createElement('div');
+        chicagoStartups.forEach( function(chicagoStartup, index) {
+            var childDiv = document.createElement('div');
+            var text = document.createTextNode(chicagoStartup.replace(/[^a-zA-Z0-9]/g, '').concat(' ').concat(chicagoStartup.replace(/[^a-zA-Z0-9]/g, '').length) );
+            childDiv.appendChild(text);
+            cleanCompanyNamesContainer.appendChild(childDiv);
+        });
 
+       	//cleanDiv.removeChild(cleanDiv.companyNamesContainer)
+        cleanDiv.appendChild(cleanCompanyNamesContainer);
+        //document.getElementById('rootContainer').appendChild(cleanDiv);
+        document.body.appendChild(cleanDiv);
     }
     
     function initReverse() {
@@ -159,26 +174,63 @@
         document.getElementById('rootContainer').appendChild(reverseContainer);
     }
 
+    function initToggle() {
+        var toggleContainer = document.createElement('div');
+        toggleContainer.id = 'toggleContainer';
+        var toggleBtn = document.createElement('button');
+        var toText = document.createTextNode('Toggle Display');
+        toggleBtn.onclick = toggleDisplay;
+        toggleBtn.appendChild(toText);
+        var toggleButtonContainer = document.createElement('div');
+        toggleButtonContainer.appendChild(toggleBtn);    
+        document.getElementById('rootContainer').appendChild(toggleButtonContainer);
+        document.getElementById('rootContainer').appendChild(toggleContainer);
+    }
+
     function toggleDisplay() {
         /*
         TODO: REVIEW THE CODE IN THE PROVIDED REVERSE EXAMPLE, USE JAVASCRIPT TO ADD A CLICKABLE BUTTON 
         CALLED "Toggle Display" ... WHEN THE USER CLICKS THE BUTTON, IT RENDERS THE DISPLAY OF THE COMPANY NAMES 
         FROM VERTICAL, TO HORIZONTAL.
         IF THE USER CLICKS THE TOGGLE BUTTON AGAIN THE NAMES SHOULD ONCE AGAIN BE DISPLAYED VERTICALLY.
-
         TIPS: 
             1.  MAKE SURE TO READ AND UNDERSTAND THE DIFFERENCE BETWEEN BLOCK ELEMENTS SUCH AS A DIV, 
                 AND INLINE ELEMENTS SUCH AS A SPAN.
-
             2.  DIVIDE AND CONQUER.
-
             3.  
         */
+
+        var toggleContainer = document.getElementById('toggleContainer');
+        var toggledChicagoStartups = [];
+        if (toggleContainer) {
+            if (toggleContainer.hasChildNodes()) {
+                while (toggleContainer.hasChildNodes()) {
+                    toggledChicagoStartups.push(toggleContainer.lastChild.innerHTML);
+                    toggleContainer.removeChild(toggleContainer.lastChild);
+                }
+                toggledChicagoStartups.forEach(function(chicagoStartup) {
+                    console.log(chicagoStartup);
+                    var childDiv = document.createElement('span');
+                    var text = document.createTextNode(chicagoStartup);
+                    childDiv.appendChild(text);
+                    toggleContainer.appendChild(childDiv);
+                });     
+            }
+            else {
+                chicagoStartups.forEach( function(startup) {
+                    var childDiv = document.createElement('div');
+                    var text = document.createTextNode(startup);
+                    childDiv.appendChild(text);
+                    toggleContainer.appendChild(childDiv);
+                });
+            }
+        }
     }
     
     function run() {
         initDocument();
         initReverse();
+        initToggle();
     }
     run();
     
@@ -222,6 +274,6 @@
                         `);
         }
         
-    });
+    })();
 
 </script>
