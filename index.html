@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <h3>Javascript Basics</h3>
-    <button onclick="cleanAndCountCharacters()">
+    <button class = "gold" onclick="cleanAndCountCharacters()">
         clean and count words
     </button>
-    <body>
+    <body >
     </body>
 </html>
 
@@ -42,11 +42,13 @@
     }
 
     .gold {
-        background-image: gold;
+        background-color: gold;
     }
 </style>
 
 <script>
+	//Lanny Xu  GitHub:https://github.com/LannyX/javascript101
+
     var colors = ['red', 'blue', 'gold'];
     var chicagoStartups = [
         '  Interior   Define  ',
@@ -151,6 +153,15 @@
         chicagoStartups.forEach( function(chicagoStartup, index) {
             var childDiv = document.createElement('div');
             var text = document.createTextNode(chicagoStartup.replace(/[^a-zA-Z0-9]/g, '').concat(' ').concat(chicagoStartup.replace(/[^a-zA-Z0-9]/g, '').length) );
+/*
+            var allcount = _.countBy(chicagoStartups, function (num) {
+            return num;
+        	});	
+            _.map(allcount, function(cnt,key){
+            childDiv.appendChild(ch +":"+counts[ch]);
+        	});
+            	
+        	*/
             childDiv.appendChild(text);
             cleanCompanyNamesContainer.appendChild(childDiv);
         });
